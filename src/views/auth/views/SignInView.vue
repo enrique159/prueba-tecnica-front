@@ -1,6 +1,6 @@
 <template>
   <div class="signin-view">
-    <div class="signin-form">
+    <div class="signin-form animate__animated animate__fadeIn">
       <h1>Inicia sesión</h1>
       <p class="text-grey-darken-1">Para ingresar a la plataforma</p>
 
@@ -106,7 +106,7 @@ const validate = async () => {
 <style lang="scss" scoped>
 .signin-view {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   display: grid;
   place-items: center;
   padding: 0 2rem;

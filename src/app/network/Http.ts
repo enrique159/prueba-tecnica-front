@@ -61,10 +61,10 @@ export default class Http implements IHttp {
   */
   async post<T, U>(url: string, payload?: IPayload<T>): Promise<Response<U>> {
     try {
-      const response = await this.axios.post(url, payload?.data ?? null, {
+      const response = await this.axios.post(url, payload?.data ?? {}, {
         params: payload?.params,
         headers: this.requestHeaders(payload?.headers ?? {}),
-        data: payload?.data ?? null,
+        data: payload?.data ?? {},
         timeout: payload?.timeout ?? TIME_OUT,
       })
 
