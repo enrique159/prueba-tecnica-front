@@ -9,10 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/icons-vue": "^2.46.0",
     "@vueuse/core": "^10.7.2",
     "axios": "^1.6.5",
     "pinia": "^2.1.7",
-    "vue": "^3.3.11",
+    "vue": "^3.4.14",
     "vue-router": "^4.2.5",
     "vuetify": "^3.4.10"
   },
