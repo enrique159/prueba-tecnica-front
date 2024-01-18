@@ -41,5 +41,11 @@ export const useAppStore = defineStore('app', {
 
       return action
     },
+
+    // SIGN OUT
+    signOut() {
+      this.token = ''
+      this.user = null
+    }
   }
 })
