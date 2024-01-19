@@ -13,18 +13,24 @@ import { IHttpSettings } from '@/app/network/domain/interfaces/IHttpSettings'
 
 interface AppState {
   token: RemovableRef<string>
-  user: User | null
+  user: RemovableRef<Partial<User>>
 }
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
     token: useLocalStorage('token', ''),
-    user: null
+    user: useLocalStorage('user', {
+      id: '',
+      name: '',
+      lastname: '',
+      email: '',
+      department: 0,
+    })
   }),
   getters: {
     validToken: (state) => state.token !== '',
     getToken: (state) => state.token,
-    getUser: (state) => state.user,
+    getUser: (state) => state.user, 
     getAuthHeader: (state) => ({ Authorization: `Bearer ${state.token}` })
   },
   actions: {
@@ -55,7 +61,13 @@ export const useAppStore = defineStore('app', {
       const action = signOutUseCase(this.getAuthHeader)
       action.then((response) => {
         this.token = ''
-        this.user = null
+        this.user = {
+          id: '',
+          name: '',
+          lastname: '',
+          email: '',
+          department: 0,
+        }
         return response
       }).catch((error) => {
         console.error('Error ❗️:', error.errors)
