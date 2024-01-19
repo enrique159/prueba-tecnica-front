@@ -5,8 +5,6 @@ import { signIn as signInUseCase, signOut as signOutUseCase } from '@/app/auth/S
 import { signUp as signUpUseCase } from '@/app/modules/users/UsersServices'
 import { ISignInRequest } from '@/app/auth/interfaces'
 import { ISignUpRequest } from '@/app/modules/users/interfaces'
-import { IHttpSettings } from '@/app/network/domain/interfaces/IHttpSettings'
-import HttpStatusCode from '@/app/shared/enums/httpStatusCode'
 
 interface AppState {
   token: RemovableRef<string>
