@@ -1,10 +1,15 @@
 import { defineStore } from 'pinia'
 import { RemovableRef, useLocalStorage } from '@vueuse/core'
 import { User } from '@/types/User.type'
-import { signIn as signInUseCase, signOut as signOutUseCase } from '@/app/auth/SignInRepository'
-import { signUp as signUpUseCase } from '@/app/modules/users/UsersServices'
+import { 
+  signIn as signInUseCase,
+  signOut as signOutUseCase,
+  recoverPassword as recoverPasswordUseCase
+} from '@/app/auth/SignInRepository'
+import { signUp as signUpUseCase, updatePassword as updatePasswordUseCase } from '@/app/modules/users/UsersServices'
 import { ISignInRequest } from '@/app/auth/interfaces'
-import { ISignUpRequest } from '@/app/modules/users/interfaces'
+import { ISignUpRequest, IUpdatePasswordRequest } from '@/app/modules/users/interfaces'
+import { IHttpSettings } from '@/app/network/domain/interfaces/IHttpSettings'
 
 interface AppState {
   token: RemovableRef<string>
@@ -12,7 +17,7 @@ interface AppState {
 }
 
 export const useAppStore = defineStore('app', {
-  state: ():AppState => ({
+  state: (): AppState => ({
     token: useLocalStorage('token', ''),
     user: null
   }),
@@ -47,7 +52,6 @@ export const useAppStore = defineStore('app', {
 
     // SIGN OUT
     signOut() {
-      console.log('signOut', this.getAuthHeader)
       const action = signOutUseCase(this.getAuthHeader)
       action.then((response) => {
         this.token = ''
@@ -64,6 +68,32 @@ export const useAppStore = defineStore('app', {
     // SIGN UP
     signUp(payload: ISignUpRequest) {
       const action = signUpUseCase(payload)
+      action.then((response) => {
+        return response
+      }).catch((error) => {
+        console.error('Error ❗️:', error.errors)
+        return error
+      })
+
+      return action
+    },
+
+    // RECOVER PASSWORD
+    recoverPassword(email: string) {
+      const action = recoverPasswordUseCase(email)
+      action.then((response) => {
+        return response
+      }).catch((error) => {
+        console.error('Error ❗️:', error.errors)
+        return error
+      })
+
+      return action
+    },
+
+    // UPDATE PASSWORD
+    updatePassword(payload: IUpdatePasswordRequest, auth: IHttpSettings) {
+      const action = updatePasswordUseCase(payload, auth)
       action.then((response) => {
         return response
       }).catch((error) => {

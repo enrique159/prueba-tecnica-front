@@ -1,5 +1,5 @@
 <template>
-  <div class="signup-view">
+  <div class="signup-view animate__animated animate__fadeIn">
     <h1 class="text-center">Registrarme</h1>
     <div class="text-center" v-if="loading">
       <h1>Creando usuario</h1>
@@ -253,12 +253,12 @@ const signUpUser = async() => {
             else if (err.code === ErrorCodes.ERR0013.code) 
             notifyError('Ya existe un usuario con las mismas credenciales.')
           else if (err.code === ErrorCodes.ERR0000.code)
-            notifyError('Ocurrió un error al iniciar sesión, favor de intentarlo de nuevo.')
+            notifyError('Ocurrió un error al intentar registrar, favor de intentarlo de nuevo.')
           else
             notifyError(err.description)
         }
       } else {
-        notifyError('Ocurrió un error al iniciar sesión, favor de intentarlo de nuevo.')
+        notifyError('Ocurrió un error al intentar registrar, favor de intentarlo de nuevo.')
       }
       loading.value = false
     })

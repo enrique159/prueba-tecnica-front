@@ -9,3 +9,8 @@ export interface ISignInResponse {
   token: string;
   user: User;
 }
+
+export interface IRecoverPasswordResponse {
+  user: Partial<User>;
+  emailSent: boolean;
+}

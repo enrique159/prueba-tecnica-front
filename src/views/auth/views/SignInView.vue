@@ -27,9 +27,19 @@
           required
         ></v-text-field>
 
-        <v-btn type="submit" color="#771BE9" :loading="loading" variant="tonal" block class="mt-2 py-6">
+        <v-row class="mb-2">
+          <v-col cols="12" class="text-left">
+            <router-link class="text-deep-purple-darken-3" :to="{ name: 'RecoverPassword' }">¿Olvidaste tu contraseña?</router-link>
+          </v-col>
+        </v-row>
+
+        <v-btn type="submit" color="#771BE9" :loading="loading" variant="tonal" block class="mt-2 mb-8 py-6">
           Ingresar
         </v-btn>
+
+        <p class="text-grey-darken-1 text-center">
+          ¿No tienes una cuenta? <router-link :to="{ name: 'SignUp' }">Regístrate</router-link>
+        </p>
       </v-form>
     </div>
   </div>

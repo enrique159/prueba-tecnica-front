@@ -11,7 +11,7 @@
         </div>
 
         <div class="auth-header__links">
-          <router-link v-if="currentRoute !== 'SignUp'" class="link d-flex ga-1 align-center" to="/login/register">
+          <router-link v-if="currentRoute === 'SignIn'" class="link d-flex ga-1 align-center" to="/login/register">
             <icon-brand-zapier :size="18" />
             <span class="d-none d-sm-flex">Registrarme</span>
           </router-link>
@@ -33,7 +33,7 @@
           :key="link"
           color="black"
           variant="text"
-          class="mx-2"
+          class="mx-2 d-none d-sm-flex"
           rounded="xl"
         >
           {{ link }}

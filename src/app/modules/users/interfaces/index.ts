@@ -11,3 +11,11 @@ export interface ISignUpRequest {
 export interface ISignUpResponse {
   user: User;
 }
+
+export interface IUpdatePasswordRequest {
+  password: string
+}
+
+export interface IUpdatePasswordResponse {
+  user: Partial<User>
+}
