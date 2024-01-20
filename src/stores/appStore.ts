@@ -6,10 +6,14 @@ import {
   signOut as signOutUseCase,
   recoverPassword as recoverPasswordUseCase
 } from '@/app/auth/SignInRepository'
+import {
+  createInvitation as createInvitationUseCase
+} from '@/app/modules/invitations/InvitationsServices'
 import { signUp as signUpUseCase, updatePassword as updatePasswordUseCase } from '@/app/modules/users/UsersServices'
 import { ISignInRequest } from '@/app/auth/interfaces'
 import { ISignUpRequest, IUpdatePasswordRequest } from '@/app/modules/users/interfaces'
 import { IHttpSettings } from '@/app/network/domain/interfaces/IHttpSettings'
+import { InvitationRequest } from '@/app/modules/invitations/interfaces'
 
 interface AppState {
   token: RemovableRef<string>
@@ -106,6 +110,22 @@ export const useAppStore = defineStore('app', {
     // UPDATE PASSWORD
     updatePassword(payload: IUpdatePasswordRequest, auth: IHttpSettings) {
       const action = updatePasswordUseCase(payload, auth)
+      action.then((response) => {
+        return response
+      }).catch((error) => {
+        console.error('Error ❗️:', error.errors)
+        return error
+      })
+
+      return action
+    },
+
+
+    // /////////// INVITATIONS //////////
+
+    // CREATE INVITATION
+    createInvitation(payload: InvitationRequest) {
+      const action = createInvitationUseCase(payload, this.getAuthHeader)
       action.then((response) => {
         return response
       }).catch((error) => {

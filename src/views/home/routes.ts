@@ -1,5 +1,5 @@
 import HomeModule from './HomeModule.vue';
-import InvitationsView from './views/InvitationsView.vue';
+import { InvitationsRoutes } from '@/views/Invitations/routes';
 
 export const HomeRoutes = [
   {
@@ -12,11 +12,7 @@ export const HomeRoutes = [
       requiresAuth: true
     },
     children: [
-      {
-        path: 'invitations',
-        name: 'Invitations',
-        component: InvitationsView,
-      }
+      ...InvitationsRoutes,
     ]
   }
 ]
