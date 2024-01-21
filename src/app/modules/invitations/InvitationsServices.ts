@@ -3,12 +3,18 @@ import Routes from "@/app/shared/routes";
 import config from "../../config";
 import { Response } from "../../network/domain/interfaces";
 import { IHttpSettings } from "@/app/network/domain/interfaces/IHttpSettings";
-import { Invitation, InvitationRequest } from "./interfaces";
+import { GetInvitationsResponse, Invitation, InvitationRequest, Invitations, QueryParams } from "./interfaces";
 
 const http = new Http();
 
 export const createInvitation = async (payload: InvitationRequest, auth: IHttpSettings): Promise<Response<Invitation>> => {
   const url = Routes.createInvitation(config.api);
   const response = await http.post<any, any>(url, { data: payload, headers: { ...auth } });
+  return response;
+}
+
+export const getInvitations = async (meta: QueryParams,auth: IHttpSettings): Promise<Response<GetInvitationsResponse>> => {
+  const url = Routes.getInvitations(config.api, meta);
+  const response = await http.get<null, GetInvitationsResponse>(url, { headers: { ...auth } });
   return response;
 }

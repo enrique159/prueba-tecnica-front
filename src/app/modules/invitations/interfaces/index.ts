@@ -22,3 +22,16 @@ export interface InvitationRequest {
   hour: string;
   caducity: string;
 }
+
+export interface QueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sort?: string;
+  order?: string;
+}
+
+export interface GetInvitationsResponse {
+  count: number;
+  rows: Invitation[];
+}
