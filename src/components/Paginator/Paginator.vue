@@ -16,16 +16,16 @@
     <span>{{ `${currentItemsInPage} de ${totalItems}` }}</span>
 
     <div class="d-flex justify-space-between align-center ga-2">
-      <v-btn density="compact" variant="tonal" :icon="IconChevronLeftPipe" @click="changePage('start')"></v-btn>
-      <v-btn density="compact" variant="tonal" :icon="IconChevronLeft" @click="changePage('prev')"></v-btn>
-      <v-btn density="compact" variant="tonal" :icon="IconChevronRight" @click="changePage('next')"></v-btn>
-      <v-btn density="compact" variant="tonal" :icon="IconChevronRightPipe" @click="changePage('finish')"></v-btn>
+      <v-btn density="compact" variant="tonal" :disabled="currentPage == 1" :icon="IconChevronLeftPipe" @click="changePage('start')"></v-btn>
+      <v-btn density="compact" variant="tonal" :disabled="currentPage == 1" :icon="IconChevronLeft" @click="changePage('prev')"></v-btn>
+      <v-btn density="compact" variant="tonal" :disabled="currentPage == totalPages" :icon="IconChevronRight" @click="changePage('next')"></v-btn>
+      <v-btn density="compact" variant="tonal" :disabled="currentPage == totalPages" :icon="IconChevronRightPipe" @click="changePage('finish')"></v-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { IconChevronLeft, IconChevronLeftPipe, IconChevronRight, IconChevronRightPipe, IconCaretDown } from "@tabler/icons-vue";
 
 const emits = defineEmits(["update:limit", "update:currentPage"]);
@@ -58,9 +58,11 @@ const changePage = (type: "start" | "prev" | "next" | "finish") => {
       emits("update:currentPage", 1);
       break;
     case "prev":
+      if (props.currentPage === 1) return;
       emits("update:currentPage", props.currentPage - 1);
       break;
     case "next":
+      if (props.currentPage === props.totalPages) return;
       emits("update:currentPage", props.currentPage + 1);
       break;
     case "finish":

@@ -19,7 +19,7 @@
       </v-row>
     </div>
 
-    <v-btn color="black" block>
+    <v-btn color="black" block @click="showDetails" rounded>
       Ver QR
     </v-btn>
   </div>
@@ -28,9 +28,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Invitation } from '@/app/modules/invitations/interfaces'
+
 const props = defineProps<{
   invitation: Invitation
 }>()
+
+const emits = defineEmits(['show:details'])
 
 const status = computed(() => {
   switch (props.invitation.status) {
@@ -53,6 +56,10 @@ const statusColor = computed(() => {
       return 'orange'
   }
 })
+
+const showDetails = () => {
+  emits('show:details')
+}
 </script>
 
 <style lang="scss" scoped>

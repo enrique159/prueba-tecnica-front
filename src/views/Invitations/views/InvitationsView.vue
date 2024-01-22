@@ -17,15 +17,43 @@
             :prepend-inner-icon="IconSearch"
             outlined
             hide-details
+            variant="outlined"
             @keyup="startTimerSearch()"
             @keydown="stopTimerSearch()"
           ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="4">
+          <v-select
+            v-model="sort"
+            :items="sortOptions"
+            item-title="title"
+            item-value="value"
+            label="Ordenar por"
+            variant="outlined"
+            hide-details
+          />
+        </v-col>
+        <v-col cols="12" sm="4">
+          <v-select
+            v-model="order"
+            :items="[ { title: 'Ascendente', value: 'ASC' }, { title: 'Descendente', value: 'DESC' } ]"
+            item-title="title"
+            item-value="value"
+            label="Orden"
+            variant="outlined"
+            hide-details
+          />
         </v-col>
       </v-row>
 
       <v-row class="px-4">
         <div class="invitations-container" v-if="!loading">
-          <invitation-card v-for="(invitation, index) in invitations" :key="index" :invitation="invitation" />
+          <invitation-card
+            v-for="(invitation, index) in invitations"
+            :key="index"
+            :invitation="invitation"
+            @show:details="showInvitationDetails(invitation)"
+          />
         </div>
         <div class="invitations-loading" v-else>
           <v-progress-circular indeterminate color="primary" size="64" />
@@ -46,11 +74,16 @@
       </v-row>
     </v-container>
   </div>
+
+  <v-dialog width="500" v-model="showModal">
+    <invitation-modal-card :invitation="selectedInvitation" />
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import Paginator from "@/components/Paginator/Paginator.vue";
 import InvitationCard from "../components/InvitationCard.vue";
+import InvitationModalCard from "../components/InvitationModalCard.vue";
 import { IconCirclePlus, IconSearch } from "@tabler/icons-vue";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -71,6 +104,13 @@ const search = ref("")
 const order = ref("DESC")
 const sort = ref("createdAt")
 
+const sortOptions = [
+  { title: "Fecha de creación", value: "createdAt" },
+  { title: "Fecha de caducidad", value: "caducity" },
+  { title: "Invitado", value: "guestName" },
+  { title: "Fecha", value: "date" },
+]
+
 const totalItems = ref(0)
 const totalPages = ref(0)
 
@@ -82,6 +122,22 @@ const changeLimit = (newLimit: number) => {
 
 const changePage = (newPage: number) => {
   page.value = newPage;
+};
+
+const showModal = ref(false);
+const selectedInvitation = ref<Invitation>({
+  id: "",
+  guestName: "",
+  date: "",
+  hour: "",
+  caducity: "",
+  status: "",
+  userId: "",
+});
+
+const showInvitationDetails = (invitation: Invitation) => {
+  selectedInvitation.value = invitation;
+  showModal.value = true;
 };
 
 

@@ -3,7 +3,7 @@ import Routes from "@/app/shared/routes";
 import config from "../../config";
 import { Response } from "../../network/domain/interfaces";
 import { IHttpSettings } from "@/app/network/domain/interfaces/IHttpSettings";
-import { GetInvitationsResponse, Invitation, InvitationRequest, Invitations, QueryParams } from "./interfaces";
+import { GetInvitationsResponse, Invitation, InvitationRequest, QueryParams } from "./interfaces";
 
 const http = new Http();
 
