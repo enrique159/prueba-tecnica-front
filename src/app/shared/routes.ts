@@ -27,6 +27,7 @@ const getInvitations = (baseUrl: string, meta: QueryParams) => `${finishSlash(ba
 const getInvitation = (baseUrl: string, id: string) => `${finishSlash(baseUrl)}invitations/${id}`
 const deleteInvitation = (baseUrl: string, id: string) => `${finishSlash(baseUrl)}invitations/${id}`
 const updateInvitation = (baseUrl: string, id: string) => `${finishSlash(baseUrl)}invitations/${id}`
+const acceptInvitation = (baseUrl: string, id: string) => `${finishSlash(baseUrl)}invitations/accept/${id}`
 
 export default {
   signIn,
@@ -39,5 +40,6 @@ export default {
   getInvitations,
   getInvitation,
   deleteInvitation,
-  updateInvitation
+  updateInvitation,
+  acceptInvitation
 }

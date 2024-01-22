@@ -1,12 +1,16 @@
 <template>
   <v-card>
     <v-card-title class="pt-6 pl-10">{{ invitation.guestName }}</v-card-title>
-    <v-card-subtitle class="pl-10">Invitación</v-card-subtitle>
     <v-card-text>
       <v-row>
         <v-col cols="12">
           <v-card-subtitle>Fecha de la invitación</v-card-subtitle>
           <v-card-title>{{ invitation.date }} - {{ invitation.hour }}</v-card-title>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-card-subtitle>Caduca: {{ caducidad }}</v-card-subtitle>
         </v-col>
       </v-row>
       <div class="d-flex justify-center align-center">
@@ -28,15 +32,17 @@
           :downloadOptions="{ name: 'invitacion-qe', extension: 'png' }"
         />
       </div>
-    </v-card-text>
 
-    <v-card-actions>
-      <v-spacer></v-spacer>
-    </v-card-actions>
+      <div class="d-flex justify-center py-8">
+        <router-link :to="`/invitations/${invitation.id}`">Ver preview de la invitación</router-link>
+      </div>
+
+    </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { Invitation } from "@/app/modules/invitations/interfaces";
 import QRCodeVue3 from "qrcode-vue3";
 
@@ -45,6 +51,10 @@ const props = defineProps<{
 }>()
 
 const URL = `${window.location.origin}/invitations/info/${props.invitation?.id}`
+
+const caducidad = computed(() => {
+  return new Date(props.invitation.caducity).toLocaleString()
+})
 </script>
 
 <style lang="scss" scoped>

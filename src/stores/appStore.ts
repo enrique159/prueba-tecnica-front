@@ -9,6 +9,8 @@ import {
 import {
   createInvitation as createInvitationUseCase,
   getInvitations as getInvitationsUseCase,
+  getInvitation as getInvitationUseCase,
+  acceptInvitation as acceptInvitationUseCase,
 } from '@/app/modules/invitations/InvitationsServices'
 import { signUp as signUpUseCase, updatePassword as updatePasswordUseCase } from '@/app/modules/users/UsersServices'
 import { ISignInRequest } from '@/app/auth/interfaces'
@@ -140,6 +142,30 @@ export const useAppStore = defineStore('app', {
     // GET INVITATIONS
     getInvitations(meta: QueryParams) {
       const action = getInvitationsUseCase(meta, this.getAuthHeader)
+      action.then((response) => {
+        return response
+      }).catch((error) => {
+        console.error('Error ❗️:', error.errors)
+        return error
+      })
+
+      return action
+    },
+
+    getInvitation(id: string) {
+      const action = getInvitationUseCase(id)
+      action.then((response) => {
+        return response
+      }).catch((error) => {
+        console.error('Error ❗️:', error.errors)
+        return error
+      })
+
+      return action
+    },
+
+    acceptInvitation(id: string) {
+      const action = acceptInvitationUseCase(id)
       action.then((response) => {
         return response
       }).catch((error) => {

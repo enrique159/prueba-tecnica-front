@@ -18,3 +18,15 @@ export const getInvitations = async (meta: QueryParams,auth: IHttpSettings): Pro
   const response = await http.get<null, GetInvitationsResponse>(url, { headers: { ...auth } });
   return response;
 }
+
+export const getInvitation = async (id: string): Promise<Response<Invitation>> => {
+  const url = Routes.getInvitation(config.api, id);
+  const response = await http.get<null, Invitation>(url);
+  return response;
+}
+
+export const acceptInvitation = async (id: string): Promise<Response<Array<number>>> => {
+  const url = Routes.acceptInvitation(config.api, id);
+  const response = await http.get<null, Array<number>>(url);
+  return response;
+}
