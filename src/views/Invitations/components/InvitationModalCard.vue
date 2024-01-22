@@ -50,7 +50,7 @@ const props = defineProps<{
   invitation: Invitation
 }>()
 
-const URL = `${window.location.origin}/invitations/info/${props.invitation?.id}`
+const URL = `${window.location.origin}/invitations/${props.invitation?.id}`
 
 const caducidad = computed(() => {
   return new Date(props.invitation.caducity).toLocaleString()
